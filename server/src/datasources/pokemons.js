@@ -5,4 +5,9 @@ class PokemonsAPI extends RESTDataSource {
     super();
     this.baseURL = 'https://pokeapi.co/api/v2'
   }
+
+  async getPokemons() {
+    const response = this.get('pokemon');
+    return response.data.results;
+  }
 }
