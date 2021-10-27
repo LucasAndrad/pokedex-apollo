@@ -1,6 +1,6 @@
 module.exports = {
   Query: {
-    pokemons: (_, __, { dataSources }) =>
-      dataSources.pokemonAPI.getPokemons(),
+    pokemons: (_, { items, page }, { dataSources }) =>
+      dataSources.pokemonAPI.getPokemons({ items, page }),
   }
 }

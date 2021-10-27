@@ -7,7 +7,7 @@ const typeDefs = gql`
   }
 
   type Query {
-    pokemons: [PokemonShort]
+    pokemons(items: Int, page: Int): [PokemonShort]
   }
 `;
 
