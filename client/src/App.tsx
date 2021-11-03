@@ -6,6 +6,7 @@ import {
 } from '@apollo/client';
 import { cache } from 'src/utils/cache';
 import { typeDefs } from 'src/utils/typeDefs';
+import { PokemonsList } from './pages';
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache,
@@ -29,7 +30,7 @@ client
 export const App = () => {
   return (
     <ApolloProvider client={client}>
-      <div>Pokedex App</div>
+      <PokemonsList />
     </ApolloProvider>
   );
 };
