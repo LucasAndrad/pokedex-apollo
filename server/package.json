@@ -4,9 +4,15 @@
   "main": "index.js",
   "author": "Lucas Andrade",
   "license": "MIT",
+  "scripts": {
+    "start": "nodemon node index.js"
+  },
   "dependencies": {
     "apollo-datasource-rest": "^3.3.0",
     "apollo-server": "^3.4.0",
     "graphql": "^15.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.14"
   }
 }
