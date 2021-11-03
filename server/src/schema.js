@@ -4,6 +4,7 @@ const typeDefs = gql`
   type PokemonShort {
     name: String
     url: String
+    img: String
   }
 
   type Query {
