@@ -14,19 +14,6 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   typeDefs,
 });
 
-client
-  .query({
-    query: gql`
-      query TestQuery {
-        pokemons(page: 1, items: 6) {
-          name
-          img
-        }
-      }
-    `,
-  })
-  .then(result => console.log(result));
-
 export const App = () => {
   return (
     <ApolloProvider client={client}>

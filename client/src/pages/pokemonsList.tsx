@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { gql, useQuery } from '@apollo/client';
+import './pokemonList.css';
 
 export const GET_POKEMONS = gql`
   query getPokemons($page: Int, $items: Int) {
@@ -19,13 +20,17 @@ export const PokemonsList = () => {
       {loading && <p>Loading ...</p>}
       {(data && !loading) && (
         <>
-          <p>pokemons available</p>
-          {data.pokemons.map((pokemon: any) => (
-            <div key={pokemon.name}>
-              <div>{pokemon.name}</div>
-              <img src={pokemon.img} />
-            </div>
-          ))}
+          <p>Pokemons available</p>
+          <div className="allPokemons">
+            {data.pokemons.map((pokemon: any) => (
+              <div key={pokemon.name} className="pokemonContainer">
+                <div style={{ marginRight: '10px' }}>
+                  <span className="pokemonName">{pokemon.name}</span>
+                </div>
+                <img src={pokemon.img} width="50" />
+              </div>
+            ))}
+          </div>
         </>
       )}
     </div>

@@ -1,4 +1,4 @@
-import { PokemonsList } from "./pokemonsList";
+import { PokemonsList } from './PokemonsList';
 
 export {
   PokemonsList,
