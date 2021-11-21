@@ -24,6 +24,11 @@ class PokemonAPI extends RESTDataSource {
 
     return pokemons;
   }
+
+  async getPokemon({ id }) {
+    const response = await this.get('pokemon', { id });
+    return response;
+  }
 }
 
 module.exports = PokemonAPI;
