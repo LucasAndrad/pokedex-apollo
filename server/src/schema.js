@@ -33,6 +33,7 @@ const typeDefs = gql`
 
   type Query {
     pokemons(items: Int, page: Int): [PokemonShort]
+    pokemon(id: Int): Pokemon
   }
 `;
 
