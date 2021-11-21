@@ -20,9 +20,9 @@ const typeDefs = gql`
   type Pokemon {
     id: Int
     name: String
+    height: Int
+    weight: Int
     # abilities: [AbilityShort]
-    # height: Int
-    # width: Int
     # types: [TypeShort]
     # imgs: {
     #   default: String
