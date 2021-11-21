@@ -19,21 +19,21 @@ const typeDefs = gql`
 
   type Pokemon {
     id: Int
-    abilities: [AbilityShort]
     name: String
-    height: Int
-    width: Int
-    types: [TypeShort]
-    imgs: {
-      default: String
-      game: String
-      gameShiny: String
-    }
+    # abilities: [AbilityShort]
+    # height: Int
+    # width: Int
+    # types: [TypeShort]
+    # imgs: {
+    #   default: String
+    #   game: String
+    #   gameShiny: String
+    # }
   }
 
   type Query {
     pokemons(items: Int, page: Int): [PokemonShort]
-    pokemon(id: Int): Pokemon
+    pokemon(id: Int!): Pokemon
   }
 `;
 
