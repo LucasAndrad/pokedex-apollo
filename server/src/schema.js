@@ -31,9 +31,18 @@ const typeDefs = gql`
     # }
   }
 
+  type User {
+    email: String!
+    name: String
+  }
+
   type Query {
     pokemons(items: Int, page: Int): [PokemonShort]
     pokemon(id: Int!): Pokemon
+  }
+
+  type Mutation {
+    createAccount(email: String!, name: String): User
   }
 `;
 
