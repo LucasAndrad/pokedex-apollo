@@ -1,9 +1,16 @@
 const { Sequelize } = require('sequelize');
 
 module.exports.createStore = () => {
-  const db = new Sequelize({
+  const Op = Sequelize.Op;
+  const operatorsAliases = {
+    $in: Op.in,
+  };
+
+  const db = new Sequelize('database', 'username', 'password', {
     dialect: 'sqlite',
-    storage: './store.sqlite'
+    storage: './store.sqlite',
+    operatorsAliases,
+    logging: false,
   });
 
   const users = db.define('user', {
@@ -16,6 +23,8 @@ module.exports.createStore = () => {
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE,
   });
+
+  async () => await users.sync()
 
   return { db, users };
 };

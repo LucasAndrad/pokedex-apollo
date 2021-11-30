@@ -1,6 +1,7 @@
 const { ApolloServer } = require('apollo-server');
 const typeDefs = require('./src/schema');
 const PokemonAPI = require('./src/datasources/pokemons');
+const UserAPI = require('./src/datasources/users');
 const resolvers = require('./src/resolvers');
 const { createStore } = require('./src/db/create');
 
