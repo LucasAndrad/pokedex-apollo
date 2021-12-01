@@ -34,6 +34,7 @@ const typeDefs = gql`
   type User {
     email: String!
     name: String
+    createdAt: String
   }
 
   type Query {

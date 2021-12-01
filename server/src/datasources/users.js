@@ -27,6 +27,7 @@ class UserAPI extends DataSource {
     if (!email) return null;
 
     const user = await this.store.users.findOne({ where: { email } });
+    console.log(user);
     if (user) return user;
 
     const newUser = await this.store.users.create({ email, name });

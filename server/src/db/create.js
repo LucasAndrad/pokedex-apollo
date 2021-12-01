@@ -20,7 +20,14 @@ module.exports.createStore = async () => {
     profileImage: Sequelize.STRING,
     // Favorites pokemons. This string should save the pokemons ids: "1,43,9"
     favorites: Sequelize.STRING,
-    createdAt: Sequelize.DATE,
+    createdAt: {
+      type: Sequelize.DATE,
+      defaultValue: new Date(),
+      get() {
+        const value = this.getDataValue('createdAt');
+        return value.toISOString();
+      }
+    },
     updatedAt: Sequelize.DATE,
   });
 
