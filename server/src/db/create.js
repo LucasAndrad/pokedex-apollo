@@ -16,7 +16,7 @@ module.exports.createStore = async () => {
   const users = db.define('user', {
     name: Sequelize.STRING,
     email: Sequelize.STRING,
-    token: Sequelize.STRING,
+    password: Sequelize.STRING,
     profileImage: Sequelize.STRING,
     // Favorites pokemons. This string should save the pokemons ids: "1,43,9"
     favorites: Sequelize.STRING,
