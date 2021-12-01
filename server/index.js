@@ -5,17 +5,19 @@ const UserAPI = require('./src/datasources/users');
 const resolvers = require('./src/resolvers');
 const { createStore } = require('./src/db/create');
 
-const store = createStore();
+(async () => {
+  const store = await createStore();
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  dataSources: () => ({
-    pokemonAPI: new PokemonAPI(),
-    usersAPI: new UserAPI({ store })
-  })
-});
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    dataSources: () => ({
+      pokemonAPI: new PokemonAPI(),
+      usersAPI: new UserAPI({ store })
+    })
+  });
 
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
-});
+  server.listen().then(({ url }) => {
+    console.log(`🚀  Server ready at ${url}`);
+  });
+})();

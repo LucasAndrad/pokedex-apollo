@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize');
 
-module.exports.createStore = () => {
+module.exports.createStore = async () => {
   const Op = Sequelize.Op;
   const operatorsAliases = {
     $in: Op.in,
@@ -24,7 +24,7 @@ module.exports.createStore = () => {
     updatedAt: Sequelize.DATE,
   });
 
-  async () => await users.sync()
+  await users.sync();
 
   return { db, users };
 };
