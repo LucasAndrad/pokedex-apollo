@@ -1,7 +1,9 @@
 const { DataSource } = require('apollo-datasource');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const SALT_ROUNDS = 1;
+const JWT_KEY = 'lucaspokedexapollostudy';
 
 const createPasswordHash = async (password) => {
   const salt = await bcrypt.genSalt(SALT_ROUNDS);
@@ -51,8 +53,18 @@ class UserAPI extends DataSource {
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) return { error: 'Email and/or Password are wrong' };
 
-    // return a valid JWT token
-    return { token: 'valid-token-123' }
+    const expiresAt = new Date();
+    // Add a week to expire the token
+    expiresAt.setDate(expiresAt.getDate() + 7);
+
+    const jwtPayload = {
+      email,
+      name: user.name,
+      expiresAt,
+    }
+
+    const token = jwt.sign(jwtPayload, JWT_KEY);
+    return { token }
   }
 }
 
