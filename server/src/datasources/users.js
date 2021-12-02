@@ -38,7 +38,7 @@ class UserAPI extends DataSource {
     const user = await this.store.users.findOne({ where: { email } });
     if (user) return user;
 
-    const passwordHash = createPasswordHash(password);
+    const passwordHash = await createPasswordHash(password);
     const newUser = await this.store.users.create({ email, name, password: passwordHash });
 
     return newUser;

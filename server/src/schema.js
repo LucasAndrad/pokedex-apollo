@@ -35,6 +35,7 @@ const typeDefs = gql`
     email: String!
     name: String
     createdAt: String
+    password: String
   }
 
   type Query {
@@ -43,7 +44,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createAccount(email: String!, name: String): User
+    createAccount(email: String!, name: String, password: String!): User
   }
 `;
 

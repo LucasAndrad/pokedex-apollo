@@ -5,6 +5,6 @@ module.exports = {
       dataSources.pokemonAPI.getPokemons({ items, page }),
   },
   Mutation: {
-    createAccount: (_, { email, name, password }, { dataSources }) => dataSources.usersAPI.findOrCreateUser({ email, name }),
+    createAccount: (_, { email, name, password }, { dataSources }) => dataSources.usersAPI.findOrCreateUser({ email, name, password }),
   }
 }
