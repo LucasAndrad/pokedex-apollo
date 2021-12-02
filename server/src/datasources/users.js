@@ -43,6 +43,17 @@ class UserAPI extends DataSource {
 
     return newUser;
   }
+
+  async loginUser({ email, password }) {
+    const user = await this.store.users.findOne({ where: { email } });
+    if (!user) return { error: 'Email and/or Password are wrong' };
+
+    const validPassword = await bcrypt.compare(password, user.password);
+    if (!validPassword) return { error: 'Email and/or Password are wrong' };
+
+    // return a valid JWT token
+    return { token: 'valid-token-123' }
+  }
 }
 
 module.exports = UserAPI;

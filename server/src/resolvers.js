@@ -6,5 +6,6 @@ module.exports = {
   },
   Mutation: {
     createAccount: (_, { email, name, password }, { dataSources }) => dataSources.usersAPI.findOrCreateUser({ email, name, password }),
+    login: (_, { email, password }, { dataSources }) => dataSources.usersAPI.loginUser({ email, password }),
   }
 }
