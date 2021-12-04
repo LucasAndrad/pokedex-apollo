@@ -2,11 +2,12 @@ import {
   ApolloClient,
   NormalizedCacheObject,
   ApolloProvider,
-  gql,
 } from '@apollo/client';
 import { cache } from 'src/utils/cache';
 import { typeDefs } from 'src/utils/typeDefs';
-import { PokemonsList } from './pages';
+import { Login, PokemonsList } from './pages';
+import { User } from 'src/utils/types';
+import { useState } from 'react';
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache,
@@ -15,9 +16,11 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 });
 
 export const App = () => {
+  const [isUser, setIsUser] = useState<User | null>(null);
+
   return (
     <ApolloProvider client={client}>
-      <PokemonsList />
+      {isUser ? <PokemonsList /> : <Login />}
     </ApolloProvider>
   );
 };

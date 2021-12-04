@@ -12,7 +12,9 @@ export const GET_POKEMONS = gql`
 `;
 
 export const PokemonsList = () => {
-  const { data, loading, error } = useQuery<any>(GET_POKEMONS);
+  const { data, loading, error } = useQuery<any>(GET_POKEMONS,
+    { variables: { page: 1, items: 40 } },
+  );
 
   return (
     <div>
