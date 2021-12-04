@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { CreateAccount } from 'src/components';
+import { AUTH_TOKEN } from 'src/utils/constants';
 
 const LOGIN_MUTATION = gql`
   mutation Login($email: String!, $password: String!) {
@@ -11,7 +12,11 @@ const LOGIN_MUTATION = gql`
   }
 `;
 
-export const Login = () => {
+type Props = {
+  setUser: any;
+}
+
+export const Login = ({ setUser }: Props) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
@@ -20,6 +25,13 @@ export const Login = () => {
   const onLogin = () => {
     loginUser({ variables: { email, password } });
   };
+
+  useEffect(() => {
+    if (data?.login?.token) {
+      localStorage.setItem(AUTH_TOKEN, data.login.token);
+      setUser({ email: '', name: '' });
+    }
+  }, [data]);
 
   return (
     <div>
