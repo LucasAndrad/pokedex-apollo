@@ -8,7 +8,8 @@ import { typeDefs } from 'src/utils/typeDefs';
 import { Login, PokemonsList } from './pages';
 import { User } from 'src/utils/types';
 import { useEffect, useState } from 'react';
-import { AUTH_TOKEN } from './utils/constants';
+import { AUTH_TOKEN } from 'src/utils/constants';
+import { getUserInfoFromToken, isTokenValid } from 'src/utils/auth';
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache,
@@ -21,7 +22,10 @@ export const App = () => {
 
   useEffect(() => {
     const token = localStorage.getItem(AUTH_TOKEN);
-    if (token) setIsUser({ email: '', name: '' });
+    if (token && isTokenValid(token)) {
+      const user = getUserInfoFromToken(token);
+      setIsUser(user);
+    }
   }, []);
 
   return (
