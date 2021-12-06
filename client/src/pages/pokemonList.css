@@ -16,5 +16,9 @@
 
 .pokemonName {
   text-transform: capitalize;
+}
 
+.pageBtn {
+  margin: 20px;
+  padding: 10px 20px;
 }

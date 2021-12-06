@@ -10,6 +10,7 @@ import { User } from 'src/utils/types';
 import { useEffect, useState } from 'react';
 import { AUTH_TOKEN } from 'src/utils/constants';
 import { getUserInfoFromToken, isTokenValid } from 'src/utils/auth';
+import { Header } from './components';
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache,
@@ -30,7 +31,12 @@ export const App = () => {
 
   return (
     <ApolloProvider client={client}>
-      {isUser ? <PokemonsList /> : <Login setUser={(user: User) => setIsUser(user)} />}
+      {isUser
+        ? <div>
+          <Header user={isUser} />
+          <PokemonsList />
+        </div>
+        : <Login setUser={(user: User) => setIsUser(user)} />}
     </ApolloProvider>
   );
 };

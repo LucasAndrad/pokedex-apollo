@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import './pokemonList.css';
 
@@ -12,6 +12,7 @@ export const GET_POKEMONS = gql`
 `;
 
 export const PokemonsList = () => {
+  const [page, setpage] = useState(0);
   const { data, loading, error } = useQuery<any>(GET_POKEMONS,
     { variables: { page: 1, items: 40 } },
   );
@@ -23,6 +24,11 @@ export const PokemonsList = () => {
       {(data && !loading) && (
         <>
           <p>Pokemons available</p>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <button className="pageBtn">{`<`}</button>
+            <span>{`page: ${page}`}</span>
+            <button className="pageBtn">{`>`}</button>
+          </div>
           <div className="allPokemons">
             {data.pokemons.map((pokemon: any) => (
               <div key={pokemon.name} className="pokemonContainer">
