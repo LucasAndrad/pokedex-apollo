@@ -2,7 +2,9 @@ import {
   ApolloClient,
   NormalizedCacheObject,
   ApolloProvider,
+  createHttpLink,
 } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import { cache } from 'src/utils/cache';
 import { typeDefs } from 'src/utils/typeDefs';
 import { Login, PokemonsList } from './pages';
@@ -12,9 +14,24 @@ import { AUTH_TOKEN } from 'src/utils/constants';
 import { getUserInfoFromToken, isTokenValid } from 'src/utils/auth';
 import { Header } from './components';
 
-const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-  cache,
+const httpLink = createHttpLink({
   uri: 'http://localhost:4000/graphql',
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem(AUTH_TOKEN);
+
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
+const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache,
   typeDefs,
 });
 
