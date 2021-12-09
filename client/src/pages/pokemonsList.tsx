@@ -12,10 +12,22 @@ export const GET_POKEMONS = gql`
 `;
 
 export const PokemonsList = () => {
-  const [page, setpage] = useState(0);
-  const { data, loading, error } = useQuery<any>(GET_POKEMONS,
-    { variables: { page: 1, items: 40 } },
+  const [page, setPage] = useState(1);
+  const { data, loading, error, refetch } = useQuery<any>(GET_POKEMONS,
+    { variables: { page, items: 40 } },
   );
+
+  const nextPage = () => {
+    setPage(page + 1);
+  };
+
+  const previousPage = () => {
+    if (page > 1) setPage(page - 1);
+  };
+
+  useEffect(() => {
+    if (!loading) refetch();
+  }, [page]);
 
   return (
     <div>
@@ -25,9 +37,9 @@ export const PokemonsList = () => {
         <>
           <p>Pokemons available</p>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <button className="pageBtn">{`<`}</button>
+            <button className="pageBtn" onClick={previousPage}>{`<`}</button>
             <span>{`page: ${page}`}</span>
-            <button className="pageBtn">{`>`}</button>
+            <button className="pageBtn" onClick={nextPage}>{`>`}</button>
           </div>
           <div className="allPokemons">
             {data.pokemons.map((pokemon: any) => (
