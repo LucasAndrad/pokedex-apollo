@@ -58,7 +58,7 @@ export const Login = ({ setUser }: Props) => {
         width: '100%', height: '1px', background: 'black', margin: '20px 0',
       }} />
 
-      <CreateAccount />
+      <CreateAccount setUser={setUser} />
     </div>
   );
 };

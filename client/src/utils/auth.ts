@@ -4,6 +4,8 @@ import { User } from './types';
  * Read the information from jwt and return a json with the token info
  */
 export const parseJwt = (token: string) => {
+  if (!token || token === 'undefined') return {};
+
   try {
     return JSON.parse(atob(token.split('.')[1]));
   } catch (e) {
@@ -15,6 +17,7 @@ export const parseJwt = (token: string) => {
  * Check if the given token has a exp valid value
  */
 export const isTokenValid = (token: string) => {
+  if (!token || token === 'undefined') return false;
   const { expiresAt } = parseJwt(token);
 
   return new Date() < new Date(expiresAt);
