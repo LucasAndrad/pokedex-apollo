@@ -50,7 +50,7 @@ export const App = () => {
     <ApolloProvider client={client}>
       {isUser
         ? <div>
-          <Header user={isUser} />
+          <Header user={isUser} setUser={(user: User | null) => setIsUser(user)} />
           <PokemonsList />
         </div>
         : <Login setUser={(user: User) => setIsUser(user)} />}
