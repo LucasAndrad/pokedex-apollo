@@ -36,12 +36,14 @@ const typeDefs = gql`
     name: String
     createdAt: String
     password: String
+    token: String
   }
 
   type LoginRes {
     token: String
     error: String
   }
+
 
   type Query {
     pokemons(items: Int, page: Int): [PokemonShort]

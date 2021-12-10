@@ -11,6 +11,17 @@ const createPasswordHash = async (password) => {
   return hash;
 }
 
+const generateJwt = ({ email, name }) => {
+  const expiresAt = new Date();
+  // Add a week to expire the token
+  expiresAt.setDate(expiresAt.getDate() + 7);
+
+  const jwtPayload = { email, name, expiresAt };
+
+  const token = jwt.sign(jwtPayload, JWT_KEY);
+  return token;
+}
+
 class UserAPI extends DataSource {
   constructor({ store }) {
     super();
@@ -38,12 +49,17 @@ class UserAPI extends DataSource {
     if (!email) return null;
 
     const user = await this.store.users.findOne({ where: { email } });
-    if (user) return user;
+    if (user) {
+      const token = generateJwt({ email, name: user.name });
+      return { email, name: user.name, token };
+    }
 
     const passwordHash = await createPasswordHash(password);
     const newUser = await this.store.users.create({ email, name, password: passwordHash });
 
-    return newUser;
+    const token = generateJwt({ email, name: newUser.name });
+
+    return { email, name: newUser.name, token };
   }
 
   async loginUser({ email, password }) {
@@ -53,17 +69,7 @@ class UserAPI extends DataSource {
     const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) return { error: 'Email and/or Password are wrong' };
 
-    const expiresAt = new Date();
-    // Add a week to expire the token
-    expiresAt.setDate(expiresAt.getDate() + 7);
-
-    const jwtPayload = {
-      email,
-      name: user.name,
-      expiresAt,
-    }
-
-    const token = jwt.sign(jwtPayload, JWT_KEY);
+    const token = generateJwt({ email, name: user.name })
     return { token }
   }
 }

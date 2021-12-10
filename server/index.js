@@ -17,7 +17,8 @@ const { parseJwt } = require('./src/utils/auth');
       usersAPI: new UserAPI({ store })
     }),
     context: ({ req }) => {
-      if (req?.body?.operationName === 'Login') return;
+      const operationName = req?.body?.operationName;
+      if (['Login', 'CreateAccount'].includes(operationName)) return;
 
       const authorizationHeader = req.headers.authorization || '';
       const token = authorizationHeader.split('Bearer ')[1];
