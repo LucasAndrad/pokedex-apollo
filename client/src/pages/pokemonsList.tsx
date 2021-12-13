@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 import './pokemonList.css';
+import { starIcon } from 'src/assets';
 
 export const GET_POKEMONS = gql`
   query getPokemons($page: Int, $items: Int) {
@@ -48,6 +49,7 @@ export const PokemonsList = () => {
                   <span className="pokemonName">{pokemon.name}</span>
                 </div>
                 <img src={pokemon.img} width="50" />
+                <img src={starIcon} width="22" className="pokemonStar" />
               </div>
             ))}
           </div>

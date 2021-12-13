@@ -22,3 +22,10 @@
   margin: 20px;
   padding: 10px 20px;
 }
+
+.pokemonStar {
+  margin-bottom: 30px;
+  margin-right: -10px;
+  margin-left: 10px;
+  cursor: pointer;
+}
