@@ -31,7 +31,14 @@ module.exports.createStore = async () => {
     updatedAt: Sequelize.DATE,
   });
 
-  await users.sync();
+  const userPokemons = db.define('userpokemon', {
+    userEmail: Sequelize.STRING,
+    pokeId: Sequelize.STRING,
+    pokeName: Sequelize.STRING,
+  });
 
-  return { db, users };
+  await users.sync();
+  await userPokemons.sync();
+
+  return { db, users, userPokemons };
 };
