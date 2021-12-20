@@ -78,6 +78,28 @@ class UserAPI extends DataSource {
     const userPokemons = await this.store.userPokemons.findAll({ where: { userEmail: user.email } });
     return userPokemons;
   }
+
+  async updateUserPokemons({ pokeId, user, pokeName }) {
+    const userPokemon = await this.store.userPokemons.findOne(
+      { where: { userEmail: user.email, pokeId } }
+    );
+
+    if (userPokemon) {
+      await this.store.userPokemons.destroy(
+        { where: { userEmail: user.email, pokeId } }
+      );
+
+      return userPokemon
+    }
+
+    if (!userPokemon) {
+      const newUserPokemon = await this.store.userPokemons.create(
+        { userEmail: user.email, pokeId, pokeName }
+      );
+
+      return newUserPokemon;
+    }
+  }
 }
 
 module.exports = UserAPI;
