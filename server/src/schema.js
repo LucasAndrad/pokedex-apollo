@@ -46,7 +46,7 @@ const typeDefs = gql`
 
   type UserPokemon {
     userEmail: String
-    pokeId: String
+    pokeId: Int!
     pokeName: String
   }
 
@@ -59,6 +59,7 @@ const typeDefs = gql`
   type Mutation {
     createAccount(email: String!, name: String, password: String!): User
     login(email: String!, password: String!): LoginRes
+    updateUserPokemons(pokeId: Int!): UserPokemon
   }
 `;
 

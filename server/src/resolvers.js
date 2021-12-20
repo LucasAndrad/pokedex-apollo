@@ -6,7 +6,10 @@ module.exports = {
     userPokemons: (_, __, { dataSources, user }) => dataSources.usersAPI.getUserPokemons({ user }),
   },
   Mutation: {
-    createAccount: (_, { email, name, password }, { dataSources }) => dataSources.usersAPI.findOrCreateUser({ email, name, password }),
     login: (_, { email, password }, { dataSources }) => dataSources.usersAPI.loginUser({ email, password }),
+    createAccount: (_, { email, name, password }, { dataSources }) =>
+      dataSources.usersAPI.findOrCreateUser({ email, name, password }),
+    updateUserPokemons: (_, { pokeId }, { dataSources, user }) =>
+      dataSources.usersAPI.updateUserPokemons({ user, pokeId }),
   }
 }

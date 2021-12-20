@@ -33,7 +33,7 @@ module.exports.createStore = async () => {
 
   const userPokemons = db.define('userpokemon', {
     userEmail: Sequelize.STRING,
-    pokeId: Sequelize.STRING,
+    pokeId: Sequelize.INTEGER,
     pokeName: Sequelize.STRING,
   });
 
