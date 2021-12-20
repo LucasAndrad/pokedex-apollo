@@ -75,8 +75,8 @@ class UserAPI extends DataSource {
   }
 
   async getUserPokemons({ user }) {
-    await console.log('--- user at getUserPokemons', user);
-    return [];
+    const userPokemons = await this.store.userPokemons.findAll({ where: { userEmail: user.email } });
+    return userPokemons;
   }
 }
 

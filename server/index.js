@@ -25,7 +25,7 @@ const { parseJwt } = require('./src/utils/auth');
       const user = parseJwt(token);
       if (!user) throw new AuthenticationError('Invalid token. Please login again.');
 
-      return user;
+      return { user };
     }
   });
 
