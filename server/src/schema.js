@@ -44,10 +44,16 @@ const typeDefs = gql`
     error: String
   }
 
+  type UserPokemon {
+    userEmail: String
+    pokeId: String
+    pokeName: String
+  }
 
   type Query {
     pokemons(items: Int, page: Int): [PokemonShort]
     pokemon(id: Int!): Pokemon
+    userPokemons: [UserPokemon]
   }
 
   type Mutation {

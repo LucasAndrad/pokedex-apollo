@@ -1,6 +1,7 @@
 const { DataSource } = require('apollo-datasource');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { parseJwt } = require('../utils/auth');
 
 const SALT_ROUNDS = 1;
 const JWT_KEY = 'lucaspokedexapollostudy';
@@ -71,6 +72,11 @@ class UserAPI extends DataSource {
 
     const token = generateJwt({ email, name: user.name })
     return { token }
+  }
+
+  async getUserPokemons({ user }) {
+    await console.log('--- user at getUserPokemons', user);
+    return [];
   }
 }
 
