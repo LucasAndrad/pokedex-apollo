@@ -18,6 +18,7 @@ export const PokemonsList = () => {
     { variables: { page, items: 40 } },
   );
 
+
   const nextPage = () => {
     setPage(page + 1);
   };

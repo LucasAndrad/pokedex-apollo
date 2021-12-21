@@ -89,7 +89,7 @@ class UserAPI extends DataSource {
         { where: { userEmail: user.email, pokeId } }
       );
 
-      return userPokemon
+      return { userPokemon, action: 'delete' }
     }
 
     if (!userPokemon) {
@@ -97,7 +97,7 @@ class UserAPI extends DataSource {
         { userEmail: user.email, pokeId, pokeName }
       );
 
-      return newUserPokemon;
+      return { userPokemon: newUserPokemon, action: 'create' };
     }
   }
 }

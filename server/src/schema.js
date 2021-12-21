@@ -50,6 +50,11 @@ const typeDefs = gql`
     pokeName: String
   }
 
+  type UpdateUserPokemonRes {
+    userPokemon: UserPokemon
+    action: String
+  }
+
   type Query {
     pokemons(items: Int, page: Int): [PokemonShort]
     pokemon(id: Int!): Pokemon
@@ -59,7 +64,7 @@ const typeDefs = gql`
   type Mutation {
     createAccount(email: String!, name: String, password: String!): User
     login(email: String!, password: String!): LoginRes
-    updateUserPokemons(pokeId: Int!): UserPokemon
+    updateUserPokemons(pokeId: Int!): UpdateUserPokemonRes
   }
 `;
 
