@@ -2,6 +2,7 @@ const { gql } = require('apollo-server');
 
 const typeDefs = gql`
   type PokemonShort {
+    id: Int
     name: String
     url: String
     img: String

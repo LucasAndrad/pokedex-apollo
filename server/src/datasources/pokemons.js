@@ -1,5 +1,13 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
 
+const getPokemonId = (pokemon) => {
+  const {url} = pokemon;
+  // url has this format: "https://pokeapi.co/api/v2/pokemon/21/"
+  const id =
+  url.split('/pokemon/')[1].split('/')[0]
+  return id;
+}
+
 const getPokemonImg = (pokemon) => {
   const {url} = pokemon;
   // url has this format: "https://pokeapi.co/api/v2/pokemon/21/"
@@ -22,7 +30,7 @@ class PokemonAPI extends RESTDataSource {
     const { results = [] } = await this.get('pokemon', { limit: items, offset });
     // Add image link
     const pokemons = results.map((pokemon) => (
-      {...pokemon, img: getPokemonImg(pokemon)}
+      {...pokemon, img: getPokemonImg(pokemon), id: getPokemonId(pokemon)}
     ));
 
     return pokemons;
