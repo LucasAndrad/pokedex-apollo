@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { gql, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 import './pokemonList.css';
 import { starFullIcon, starIcon } from 'src/assets';
 
-export const GET_POKEMONS = gql`
+const GET_POKEMONS = gql`
   query getPokemons($page: Int, $items: Int) {
     pokemons(page: $page, items: $items) {
       id
@@ -14,10 +14,22 @@ export const GET_POKEMONS = gql`
 `;
 
 const GET_USER_POKEMONS = gql`
-  query getUserPokemons {
+  query GetUserPokemons {
     userPokemons {
       userEmail
       pokeId
+    }
+  }
+`;
+
+const UPDATE_USER_POKEMONS = gql`
+  mutation updateUserPokemons($pokeId: Int!) {
+    updateUserPokemons(pokeId: $pokeId) {
+      userPokemon {
+        userEmail
+        pokeId
+      }
+      action
     }
   }
 `;
@@ -32,10 +44,16 @@ export const PokemonsList = () => {
     refetch: refetchUserPokeons,
   } = useQuery<any>(GET_USER_POKEMONS);
 
+  const [updateUserPokemon] = useMutation<any>(UPDATE_USER_POKEMONS, {
+    refetchQueries: [
+      GET_USER_POKEMONS,
+      'GetUserPokemons',
+    ],
+  });
+
   const { data, loading, error, refetch } = useQuery<any>(GET_POKEMONS,
     { variables: { page, items: 40 } },
   );
-
 
   useEffect(() => {
     if (userPokemonsData?.userPokemons?.length) {
@@ -80,8 +98,18 @@ export const PokemonsList = () => {
                 </div>
                 <img src={pokemon.img} width="50" />
                 {userPokeIds.includes(parseInt(pokemon.id))
-                  ? <img src={starFullIcon} width="22" className="pokemonStar" />
-                  : <img src={starIcon} width="22" className="pokemonStar" />
+                  ? <img
+                    src={starFullIcon}
+                    width="22"
+                    className="pokemonStar"
+                    onClick={() => updateUserPokemon({ variables: { pokeId: pokemon.id } })}
+                  />
+                  : <img
+                    src={starIcon}
+                    width="22"
+                    className="pokemonStar"
+                    onClick={() => updateUserPokemon({ variables: { pokeId: pokemon.id } })}
+                  />
                 }
 
               </div>
