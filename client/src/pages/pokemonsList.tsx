@@ -26,8 +26,8 @@ const UPDATE_USER_POKEMONS = gql`
   mutation updateUserPokemons($pokeId: Int!) {
     updateUserPokemons(pokeId: $pokeId) {
       userPokemon {
-        userEmail
         pokeId
+        userEmail
       }
       action
     }
@@ -45,10 +45,31 @@ export const PokemonsList = () => {
   } = useQuery<any>(GET_USER_POKEMONS);
 
   const [updateUserPokemon] = useMutation<any>(UPDATE_USER_POKEMONS, {
-    refetchQueries: [
-      GET_USER_POKEMONS,
-      'GetUserPokemons',
-    ],
+    // refetchQueries: [
+    //   GET_USER_POKEMONS,
+    //   'GetUserPokemons',
+    // ],
+    update(cache, { data }) {
+      cache.modify({
+        fields: {
+          userPokemons(currentPokemons = []) {
+            const { updateUserPokemons } = data;
+            const { userPokemon, action } = updateUserPokemons;
+            if (action === 'create') {
+              return [...currentPokemons, userPokemon];
+            }
+
+            if (action === 'delete') {
+              const newUserPokemons = currentPokemons.filter(
+                (pokemon: any) => pokemon.pokeId !== userPokemon.pokeId,
+              );
+
+              return newUserPokemons;
+            }
+          },
+        },
+      });
+    },
   });
 
   const { data, loading, error, refetch } = useQuery<any>(GET_POKEMONS,
@@ -78,6 +99,21 @@ export const PokemonsList = () => {
     if (!loading) refetch();
   }, [page]);
 
+  const onUserPokemonUpdate = (pokeId: number) => {
+    updateUserPokemon({
+      variables: { pokeId },
+      optimisticResponse: {
+        updateUserPokemons: {
+          userPokemon: {
+            pokeId,
+            userEmail: '',
+          },
+          action: userPokeIds.includes(pokeId) ? 'delete' : 'create',
+        },
+      },
+    });
+  };
+
   return (
     <div>
       <h3>Pokemons List</h3>
@@ -102,13 +138,13 @@ export const PokemonsList = () => {
                     src={starFullIcon}
                     width="22"
                     className="pokemonStar"
-                    onClick={() => updateUserPokemon({ variables: { pokeId: pokemon.id } })}
+                    onClick={() => onUserPokemonUpdate(pokemon.id)}
                   />
                   : <img
                     src={starIcon}
                     width="22"
                     className="pokemonStar"
-                    onClick={() => updateUserPokemon({ variables: { pokeId: pokemon.id } })}
+                    onClick={() => onUserPokemonUpdate(pokemon.id)}
                   />
                 }
 

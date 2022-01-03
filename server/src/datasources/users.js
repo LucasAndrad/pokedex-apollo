@@ -6,6 +6,8 @@ const { parseJwt } = require('../utils/auth');
 const SALT_ROUNDS = 1;
 const JWT_KEY = 'lucaspokedexapollostudy';
 
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+
 const createPasswordHash = async (password) => {
   const salt = await bcrypt.genSalt(SALT_ROUNDS);
   const hash = await bcrypt.hash(password, salt);
@@ -80,6 +82,9 @@ class UserAPI extends DataSource {
   }
 
   async updateUserPokemons({ pokeId, user, pokeName }) {
+    // console.log('---- before delay: ', new Date().toISOString());
+    // await delay(3000);
+    // console.log('---- after delay: ', new Date().toISOString());
     const userPokemon = await this.store.userPokemons.findOne(
       { where: { userEmail: user.email, pokeId } }
     );
